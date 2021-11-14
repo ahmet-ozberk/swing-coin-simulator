@@ -4,6 +4,8 @@
  */
 package coinsimulators;
 
+import databases.DatabaseProcess;
+
 /**
  *
  * @author ahmet
@@ -15,6 +17,9 @@ public class HomePage extends javax.swing.JFrame {
      */
     public HomePage() {
         initComponents();
+        DatabaseProcess.Listele();
+        userPrice.setText(DatabaseProcess.priceValue+" ₺");
+        super.setTitle(DatabaseProcess.userName);
     }
 
     /**
@@ -26,20 +31,33 @@ public class HomePage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        userPrice = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
         setPreferredSize(new java.awt.Dimension(522, 395));
         setResizable(false);
 
+        userPrice.setFont(new java.awt.Font("Montserrat", 1, 13)); // NOI18N
+        userPrice.setForeground(new java.awt.Color(153, 102, 0));
+        userPrice.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        userPrice.setText("Para");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(258, Short.MAX_VALUE)
+                .addComponent(userPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(userPrice)
+                .addContainerGap(350, Short.MAX_VALUE))
         );
 
         pack();
@@ -81,5 +99,6 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel userPrice;
     // End of variables declaration//GEN-END:variables
 }

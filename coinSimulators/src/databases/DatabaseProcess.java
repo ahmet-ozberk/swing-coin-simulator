@@ -3,33 +3,34 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class DatabaseProcess {
-
     private static Connection con;
     private static Statement stmt;
-
     public static void yeniVtOlustur(String dosyaadi) throws ClassNotFoundException {
         try {
             Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:deneme.db");
+            con = DriverManager.getConnection("jdbc:sqlite:database.db");
             stmt = con.createStatement();
-            String sql = "CREATE TABLE if not exists OGRENCI "
-                    + "(OGRNO INT PRIMARY KEY NOT NULL,"
-                    + " OGRAD  CHAR(50) NOT NULL, "
-                    + " OGRSOYAD CHAR(50) NOT NULL)";
+            String sql = "CREATE TABLE if not exists VERILER "
+                    + "(NO INT PRIMARY KEY     NOT NULL,"
+                    + " USERNAME  CHAR(50)    NOT NULL, "
+                    + " PRICE   INT     NOT NULL)";
             stmt.executeUpdate(sql);
             System.out.println("Veritabanı Oluşturma Başarılı");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-
+    public static int priceValue;
+    public static String userName;
     public static void Listele() {
         try {
 
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from ogrenci");
+            ResultSet rs = stmt.executeQuery("select * from veriler");
             while (rs.next()) {
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getInt(3));
+                priceValue = rs.getInt(3);
+                userName = rs.getString(2);
             }
 
         } catch (Exception e) {
@@ -38,17 +39,13 @@ public class DatabaseProcess {
 
     }
 
-    public static void Ekle() {
-        Scanner scan = new Scanner(System.in, "iso-8859-9");
-        System.out.print("Yeni Öğrenci No     :");
-        int yenino = scan.nextInt();
-        System.out.print("Yeni Öğrenci Adı    :");
-        String ad = scan.next();
-        System.out.print("Yeni Öğrenci Soyadı :");
-        String soyad = scan.next();
+    public static void Ekle(int no,String kullaniciAdi, int para) {
+        int number = no;
+        String username = kullaniciAdi;
+        int price = para;
         try {
             Statement stmt = con.createStatement();
-            String sorgu = String.format("insert into ogrenci values( %d, '%s','%s')", yenino, ad, soyad);
+            String sorgu = String.format("insert into veriler values('%d', '%s', '%d')",number, username, price);
             int ekleme = stmt.executeUpdate(sorgu);
             System.out.println("Kayıt Eklendi");
         } catch (Exception e) {
@@ -56,20 +53,13 @@ public class DatabaseProcess {
         }
     }
 
-    public static void Guncelle() {
-        Scanner scan = new Scanner(System.in, "iso-8859-9");
+    public static void Guncelle(int para) {
+        int price = para;
         try {
             Listele();
-            System.out.print("Öğrenci Numarasını Girin:");
-            int eskino = scan.nextInt();
-            System.out.print("Yeni Öğrenci No     :");
-            int yenino = scan.nextInt();
-            System.out.print("Yeni Öğrenci Adı    :");
-            String ad = scan.next();
-            System.out.print("Yeni Öğrenci Soyadı :");
-            String soyad = scan.next();
+            int yenino = price;
 
-            String sorgu = String.format("update ogrenci set ogrno=%d, ograd='%s',ogrsoyad='%s' where ogrno=%d ", yenino, ad, soyad, eskino);
+            String sorgu = String.format("update veriler set PRICE='%d'", price);
 
             Statement stmt = con.createStatement();
             int guncelleme = stmt.executeUpdate(sorgu);
@@ -99,51 +89,12 @@ public class DatabaseProcess {
     static String vtAd;
 
     public static void main(String[] args) {
-        vtAd = "deneme.db";
+        vtAd = "database.db";
         /*veritabanı yoksa oluşturur varsa bağlanır*/
         try {
             yeniVtOlustur(vtAd);
         } catch (Exception e) {
             System.out.println(e);
-        }
-
-        Scanner scan = new Scanner(System.in, "iso-8859-9");
-        int secim;
-
-        while (true) {
-            System.out.println("*************");
-            System.out.println("1.Listele");
-            System.out.println("2.Ekle");
-            System.out.println("3.Güncelle");
-            System.out.println("4.Sil");
-            System.out.println("5.Çıkış");
-            System.out.print("Seçiminiz:");
-            secim = scan.nextInt();
-
-            System.out.println("*************");
-
-            if (secim == 1) {
-                Listele();
-            }
-            if (secim == 2) {
-                Ekle();
-            }
-            if (secim == 3) {
-                Guncelle();
-            }
-            if (secim == 4) {
-                Sil();
-            }
-            if (secim == 5) {
-                try {
-                    stmt.close();
-                    con.close();
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-
-                break;
-            }
         }
     }
 }

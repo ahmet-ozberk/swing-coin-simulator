@@ -1,9 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package coinsimulators;
-
+import databases.DatabaseProcess;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -16,10 +12,22 @@ public class MainClass extends javax.swing.JFrame {
     /**
      * Creates new form MainClass
      */
+    DatabaseProcess database = new DatabaseProcess();
     public MainClass() {
         initComponents();
+        String [] list = new String [0];
+        DatabaseProcess.main(list);   
+        DatabaseProcess.Listele();
         kullaniciAdiTextField.setText("Kullanıcı adını gir ve başla...");
         baslaButton.setVisible(false);
+       
+        if(DatabaseProcess.userName != null){
+            
+            CloseFrame();
+            HomePage homePage = new HomePage();
+            homePage.setVisible(true);
+            
+        }
     }
 
     /**
@@ -162,6 +170,7 @@ public class MainClass extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_kullaniciAdiTextFieldKeyPressed
     public void CloseFrame() {
+        super.setVisible(false);
         super.dispose();
     }
     private void baslaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baslaButtonActionPerformed
@@ -172,6 +181,7 @@ public class MainClass extends javax.swing.JFrame {
             var f = new JFrame();
             JOptionPane.showMessageDialog(f, "Kullanıcı adın en az 6 karakter olmalıdır! Boşluklara dikkat edin.", "Uyarı", JOptionPane.WARNING_MESSAGE);
         } else {
+            DatabaseProcess.Ekle(0,text,1000);
             var f = new JFrame();
             JOptionPane.showMessageDialog(f, "Kaydınız tamamlandı anasayfaya yönlendiriliyorsunuz..");
             try {
@@ -229,4 +239,5 @@ public class MainClass extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField kullaniciAdiTextField;
     // End of variables declaration//GEN-END:variables
+
 }
