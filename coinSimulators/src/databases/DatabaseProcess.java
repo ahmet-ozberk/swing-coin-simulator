@@ -63,7 +63,25 @@ public class DatabaseProcess {
 
             Statement stmt = con.createStatement();
             int guncelleme = stmt.executeUpdate(sorgu);
+            
             System.out.println("Kayıtlar Güncellendi");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+        public static void GuncelleUsername(String isim) {
+        String yeniIsim = isim;
+        try {
+            Listele();
+
+            String sorgu = String.format("update veriler set USERNAME='%s'", yeniIsim);
+
+            Statement stmt = con.createStatement();
+            int guncelleme = stmt.executeUpdate(sorgu);
+            userName = isim;
+            System.out.println("Kayıtlar Güncellendi");
+            Listele();
         } catch (Exception e) {
             System.out.println(e);
         }

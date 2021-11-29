@@ -1,5 +1,6 @@
 package coinsimulators;
 
+import databases.CoinsDatabase;
 import databases.DatabaseProcess;
 import java.awt.Dimension;
 import javax.swing.*;
@@ -67,6 +68,9 @@ public class Loading extends JFrame {
             String[] list = new String[0];
             DatabaseProcess.main(list);
             DatabaseProcess.Listele();
+            CoinsDatabase.main(list);
+            CoinsDatabase.Ekle();
+            CoinsDatabase.Listele();
             f.setVisible(false);
             f.dispose();
             if (DatabaseProcess.userName != null) {

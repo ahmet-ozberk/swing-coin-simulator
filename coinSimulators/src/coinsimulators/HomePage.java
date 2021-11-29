@@ -4,7 +4,12 @@
  */
 package coinsimulators;
 
+import databases.CoinsDatabase;
 import databases.DatabaseProcess;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -15,11 +20,25 @@ public class HomePage extends javax.swing.JFrame {
     /**
      * Creates new form HomePage
      */
+    CoinsDatabase coins = new CoinsDatabase();
+
     public HomePage() {
         initComponents();
         DatabaseProcess.Listele();
-        userPrice.setText(DatabaseProcess.priceValue+" ₺");
-        super.setTitle(DatabaseProcess.userName);
+        userPrice.setText("Mevcut Para: " + DatabaseProcess.priceValue + " $");
+        //WindowTitle();
+        super.setTitle("Coin Simulator");
+        DefaultTableModel tblModel = (DefaultTableModel) coinTable.getModel();
+        coins.Listele();
+        for (int i = 0; i < 6; i++) {
+            String tbData[] = {"" + coins.coinsName[i], "" + coins.coinsValue[i]};
+            tblModel.addRow(tbData);
+        }
+        JTableHeader tableHeader = coinTable.getTableHeader();
+        tableHeader.setBackground(Color.GRAY.brighter());
+        tableHeader.setForeground(Color.white);
+        Font headerFont = new Font("Verdana", Font.CENTER_BASELINE, 16);
+        tableHeader.setFont(headerFont);
     }
 
     /**
@@ -32,36 +51,234 @@ public class HomePage extends javax.swing.JFrame {
     private void initComponents() {
 
         userPrice = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        coinTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        islemsec = new javax.swing.JComboBox<>();
+        ilkhesap = new javax.swing.JTextField();
+        ikincihesap = new javax.swing.JTextField();
+        islemdurumu = new javax.swing.JLabel();
+        sonucugor = new javax.swing.JButton();
+        hesapsonucu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
-        setPreferredSize(new java.awt.Dimension(522, 395));
         setResizable(false);
 
         userPrice.setFont(new java.awt.Font("Montserrat", 1, 13)); // NOI18N
         userPrice.setForeground(new java.awt.Color(153, 102, 0));
         userPrice.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        userPrice.setIcon(new javax.swing.ImageIcon("/Users/ahmet/Github/swing-coin-simulator/coinSimulators/src/icons/para.png")); // NOI18N
         userPrice.setText("Para");
+
+        jButton1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("/Users/ahmet/Github/swing-coin-simulator/coinSimulators/src/icons/al.png")); // NOI18N
+        jButton1.setText("   Coin Al");
+        jButton1.setToolTipText("Coin alışverişinizi yapın");
+
+        jButton2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon("/Users/ahmet/Github/swing-coin-simulator/coinSimulators/src/icons/profile.png")); // NOI18N
+        jButton2.setText("Profilim");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon("/Users/ahmet/Github/swing-coin-simulator/coinSimulators/src/icons/sat.png")); // NOI18N
+        jButton3.setText("   Coin Sat");
+        jButton3.setToolTipText("Coin alışverişinizi yapın");
+
+        coinTable.setBackground(new java.awt.Color(238, 238, 238));
+        coinTable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
+        coinTable.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        coinTable.setForeground(new java.awt.Color(102, 102, 102));
+        coinTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Coin İsmi", "Coin Fiyatı ( $ )"
+            }
+        ));
+        coinTable.setToolTipText("Güncel Coin Kuru Tablosu");
+        coinTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        coinTable.setEditingRow(-5);
+        coinTable.setEnabled(false);
+        coinTable.setGridColor(new java.awt.Color(153, 153, 0));
+        coinTable.setRowHeight(25);
+        coinTable.setSelectionBackground(new java.awt.Color(153, 153, 153));
+        coinTable.setSelectionForeground(new java.awt.Color(255, 255, 0));
+        coinTable.setShowGrid(true);
+        jScrollPane1.setViewportView(coinTable);
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/ahmet/Github/swing-coin-simulator/coinSimulators/src/icons/coinkuru.png")); // NOI18N
+        jLabel1.setText("  Coin Kuru");
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel2.setIcon(new javax.swing.ImageIcon("/Users/ahmet/Github/swing-coin-simulator/coinSimulators/src/icons/calc.png")); // NOI18N
+        jLabel2.setText(" Hesapla");
+
+        islemsec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Topla", "Çıkar", "Çarp", "Böl" }));
+        islemsec.setToolTipText("Lütfen bir işlem seçin");
+        islemsec.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                islemsecİtemStateChanged(evt);
+            }
+        });
+
+        ilkhesap.setBackground(new java.awt.Color(238, 238, 238));
+        ilkhesap.setToolTipText("İlk sayıyı girin");
+        ilkhesap.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "İlk Değer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(204, 51, 0))); // NOI18N
+        ilkhesap.setOpaque(true);
+
+        ikincihesap.setBackground(new java.awt.Color(238, 238, 238));
+        ikincihesap.setToolTipText("İkinci sayıyı girin");
+        ikincihesap.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "İkinci Değer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(204, 51, 0))); // NOI18N
+
+        islemdurumu.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        islemdurumu.setText("+");
+
+        sonucugor.setText("Sonucu Gör");
+        sonucugor.setToolTipText("Belirttiğiniz işlemin sonucunu hesaplayın");
+        sonucugor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sonucugorActionPerformed(evt);
+            }
+        });
+
+        hesapsonucu.setFont(new java.awt.Font("Lucida Grande", 1, 15)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(258, Short.MAX_VALUE)
-                .addComponent(userPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(islemsec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ilkhesap, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(islemdurumu, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ikincihesap, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(sonucugor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(hesapsonucu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59)
+                        .addComponent(userPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(userPrice)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(userPrice))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(islemsec, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(islemdurumu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(ilkhesap, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ikincihesap, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sonucugor, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hesapsonucu, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(145, 145, 145)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void islemsecİtemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_islemsecİtemStateChanged
+        switch (islemsec.getSelectedIndex()) {
+            case 0:
+                islemdurumu.setText("+");
+                break;
+            case 1:
+                islemdurumu.setText("-");
+                break;
+            case 2:
+                islemdurumu.setText("x");
+                break;
+            case 3:
+                islemdurumu.setText("/");
+                break;
+        }   // TODO add your handling code here:
+    }//GEN-LAST:event_islemsecİtemStateChanged
+
+    private void sonucugorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sonucugorActionPerformed
+        if (ilkhesap.getText().isEmpty() && ikincihesap.getText().isEmpty()) {
+            hesapsonucu.setText("Hatalı giriş!!");
+        } else {
+            try {
+                int i = Integer.parseInt(ilkhesap.getText());
+                int k = Integer.parseInt(ikincihesap.getText());
+                switch (islemsec.getSelectedIndex()) {
+                    case 0:
+                        hesapsonucu.setText("Sonuç: " + (i + k));
+                        break;
+                    case 1:
+                        hesapsonucu.setText("Sonuç: " + (i - k));
+                        break;
+                    case 2:
+                        hesapsonucu.setText("Sonuç: " + (i * k));
+                        break;
+                    case 3:
+                        hesapsonucu.setText("Sonuç: " + (i / k));
+                        break;
+                }
+            } catch (Exception e) {
+                hesapsonucu.setText("Hatalı giriş!!\n");
+            }
+        }
+    }//GEN-LAST:event_sonucugorActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ProfilePage profile = new ProfilePage();
+        profile.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -99,6 +316,19 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable coinTable;
+    private javax.swing.JLabel hesapsonucu;
+    private javax.swing.JTextField ikincihesap;
+    private javax.swing.JTextField ilkhesap;
+    private javax.swing.JLabel islemdurumu;
+    private javax.swing.JComboBox<String> islemsec;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton sonucugor;
     private javax.swing.JLabel userPrice;
     // End of variables declaration//GEN-END:variables
 }
