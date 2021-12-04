@@ -1,6 +1,5 @@
 package databases;
 import java.sql.*;
-import java.util.Scanner;
 
 public class DatabaseProcess {
     private static Connection con;
@@ -82,23 +81,6 @@ public class DatabaseProcess {
             userName = isim;
             System.out.println("Kayıtlar Güncellendi");
             Listele();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public static void Sil() {
-        Scanner scan = new Scanner(System.in, "iso-8859-9");
-        try {
-            Listele();
-            System.out.print("Öğrenci Numarasını Girin:");
-            int eskino = scan.nextInt();
-
-            String sorgu = String.format("delete from ogrenci where ogrno=%d", eskino);
-            Statement stmt = con.createStatement();
-            int silindi = stmt.executeUpdate(sorgu);
-            System.out.println("Kayıtlar Silindi");
-
         } catch (Exception e) {
             System.out.println(e);
         }

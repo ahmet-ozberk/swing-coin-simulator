@@ -2,6 +2,8 @@ package coinsimulators;
 
 import databases.CoinsDatabase;
 import databases.DatabaseProcess;
+import databases.ItemsDatabase;
+import databases.UserItems;
 import java.awt.Dimension;
 import javax.swing.*;
 
@@ -19,7 +21,7 @@ public class Loading extends JFrame {
         // create a frame
         f = new JFrame("Uygulama Yükleniyor..");
 
-        f.setLocation(500, 200);
+        f.setLocation(500, 300);
 
         l = new JLabel();
 
@@ -68,16 +70,19 @@ public class Loading extends JFrame {
             String[] list = new String[0];
             DatabaseProcess.main(list);
             DatabaseProcess.Listele();
+            UserItems.main(list);
+            UserItems.Listele();
             CoinsDatabase.main(list);
             CoinsDatabase.Ekle();
             CoinsDatabase.Listele();
+            ItemsDatabase.main(list);
+            ItemsDatabase.Ekle();
+            ItemsDatabase.Listele();
             f.setVisible(false);
             f.dispose();
             if (DatabaseProcess.userName != null) {
-                System.out.println("Null Değil");
                 HomePage homePage = new HomePage();
                 homePage.setVisible(true);
-
             } else {
                 System.out.println("Null");
                 MainClass mainClass = new MainClass();

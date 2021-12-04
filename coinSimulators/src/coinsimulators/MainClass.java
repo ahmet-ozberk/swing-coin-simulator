@@ -1,5 +1,10 @@
 package coinsimulators;
+
 import databases.DatabaseProcess;
+import databases.UserItems;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -13,20 +18,30 @@ public class MainClass extends javax.swing.JFrame {
      * Creates new form MainClass
      */
     DatabaseProcess database = new DatabaseProcess();
+
     public MainClass() {
         initComponents();
-        String [] list = new String [0];
-        DatabaseProcess.main(list);   
+        Dimension windowSize = getSize();
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        Point centerPoint = ge.getCenterPoint();
+
+        int dx = centerPoint.x - windowSize.width / 2;
+        int dy = centerPoint.y - windowSize.height / 2;
+        super.setLocation(dx, dy);
+        String[] list = new String[0];
+        DatabaseProcess.main(list);
         DatabaseProcess.Listele();
+        UserItems.main(list);
+        UserItems.Listele();
         kullaniciAdiTextField.setText("Kullanıcı adını gir ve başla...");
         baslaButton.setVisible(false);
-       
-        if(DatabaseProcess.userName != null){
-            
+
+        if (DatabaseProcess.userName != null) {
+
             CloseFrame();
             HomePage homePage = new HomePage();
             homePage.setVisible(true);
-            
+
         }
     }
 
@@ -181,7 +196,9 @@ public class MainClass extends javax.swing.JFrame {
             var f = new JFrame();
             JOptionPane.showMessageDialog(f, "Kullanıcı adın en az 6 karakter olmalıdır! Boşluklara dikkat edin.", "Uyarı", JOptionPane.WARNING_MESSAGE);
         } else {
-            DatabaseProcess.Ekle(0,text,1000);
+            DatabaseProcess.Ekle(0, text, 4564000);
+            UserItems.Ekle();
+
             var f = new JFrame();
             JOptionPane.showMessageDialog(f, "Kaydınız tamamlandı anasayfaya yönlendiriliyorsunuz..");
             try {

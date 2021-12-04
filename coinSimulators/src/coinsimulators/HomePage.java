@@ -7,7 +7,10 @@ package coinsimulators;
 import databases.CoinsDatabase;
 import databases.DatabaseProcess;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -21,9 +24,17 @@ public class HomePage extends javax.swing.JFrame {
      * Creates new form HomePage
      */
     CoinsDatabase coins = new CoinsDatabase();
+   
 
     public HomePage() {
         initComponents();
+                    Dimension windowSize = getSize();
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Point centerPoint = ge.getCenterPoint();
+
+            int dx = centerPoint.x - windowSize.width / 2;
+            int dy = centerPoint.y - windowSize.height / 2;    
+            super.setLocation(dx, dy);
         DatabaseProcess.Listele();
         userPrice.setText("Mevcut Para: " + DatabaseProcess.priceValue + " $");
         //WindowTitle();
@@ -67,6 +78,7 @@ public class HomePage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
+        setLocationByPlatform(true);
         setResizable(false);
 
         userPrice.setFont(new java.awt.Font("Montserrat", 1, 13)); // NOI18N
@@ -251,6 +263,7 @@ public class HomePage extends javax.swing.JFrame {
     private void sonucugorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sonucugorActionPerformed
         if (ilkhesap.getText().isEmpty() && ikincihesap.getText().isEmpty()) {
             hesapsonucu.setText("Hatalı giriş!!");
+            islemsec.addItem("deneme");
         } else {
             try {
                 int i = Integer.parseInt(ilkhesap.getText());
@@ -276,6 +289,8 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_sonucugorActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        super.setVisible(false);super.dispose();
         ProfilePage profile = new ProfilePage();
         profile.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -306,7 +321,7 @@ public class HomePage extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
