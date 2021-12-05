@@ -2,6 +2,7 @@ package coinsimulators;
 
 import databases.AssetsDatabase;
 import databases.DatabaseProcess;
+import databases.TotalDb;
 import databases.UserItems;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -32,6 +33,8 @@ public class MainClass extends javax.swing.JFrame {
         String[] list = new String[0];
         DatabaseProcess.main(list);
         DatabaseProcess.Listele();
+        TotalDb.main(list);
+        TotalDb.Listele();
         UserItems.main(list);
         UserItems.Listele();
         AssetsDatabase assets = new AssetsDatabase();
@@ -64,6 +67,7 @@ public class MainClass extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         kullaniciAdiTextField = new javax.swing.JTextField();
         baslaButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -123,25 +127,29 @@ public class MainClass extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Not: Başlangıçta sahip sana 10000$ bakiye tanımladı. İyi değerlendir.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(baslaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(127, 127, 127))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(151, 151, 151))
             .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(kullaniciAdiTextField)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(baslaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(jLabel1)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(kullaniciAdiTextField)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,13 +158,15 @@ public class MainClass extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(44, 44, 44)
                 .addComponent(jLabel2)
-                .addGap(50, 50, 50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(kullaniciAdiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addComponent(baslaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(baslaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -201,9 +211,10 @@ public class MainClass extends javax.swing.JFrame {
             var f = new JFrame();
             JOptionPane.showMessageDialog(f, "Kullanıcı adın en az 6 karakter olmalıdır! Boşluklara dikkat edin.", "Uyarı", JOptionPane.WARNING_MESSAGE);
         } else {
-            DatabaseProcess.Ekle(0, text, 4564000);
+            DatabaseProcess.Ekle(0, text, 10000);
             UserItems.Ekle();
             AssetsDatabase.Ekle();
+            TotalDb.Ekle();
             var f = new JFrame();
             JOptionPane.showMessageDialog(f, "Kaydınız tamamlandı anasayfaya yönlendiriliyorsunuz..");
             try {
@@ -259,6 +270,7 @@ public class MainClass extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField kullaniciAdiTextField;
     // End of variables declaration//GEN-END:variables
 

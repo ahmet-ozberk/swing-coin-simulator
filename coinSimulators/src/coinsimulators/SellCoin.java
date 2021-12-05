@@ -7,6 +7,7 @@ package coinsimulators;
 import databases.AssetsDatabase;
 import databases.CoinsDatabase;
 import databases.DatabaseProcess;
+import databases.TotalDb;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -27,6 +28,7 @@ public class SellCoin extends javax.swing.JFrame {
     AssetsDatabase assets = new AssetsDatabase();
     DatabaseProcess db = new DatabaseProcess();
     CoinsDatabase coins = new CoinsDatabase();
+    TotalDb totalDb = new TotalDb();
 
     public SellCoin() {
         initComponents();
@@ -58,6 +60,8 @@ public class SellCoin extends javax.swing.JFrame {
         cardano = new javax.swing.JRadioButton();
         binance = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Coin Sat");
@@ -134,41 +138,53 @@ public class SellCoin extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Not: Satmak istediğiniz coinin adet tutarı, mevcutta");
+
+        jLabel2.setText("sahip olduğunuz adeti aşmamalıdır.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(24, 24, 24)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(solana)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(cardano)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(binance))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(bitcoin)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(ethereum)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(tether)))
-                            .addGap(18, 18, 18)
-                            .addComponent(adet, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(solana)
+                                .addGap(18, 18, 18)
+                                .addComponent(cardano)
+                                .addGap(18, 18, 18)
+                                .addComponent(binance))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bitcoin)
+                                .addGap(18, 18, 18)
+                                .addComponent(ethereum)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tether)))
+                        .addGap(18, 18, 18)
+                        .addComponent(adet, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -270,37 +286,76 @@ public class SellCoin extends javax.swing.JFrame {
             uyari(coins.coinsValue[5] * Integer.parseInt(adet.getValue().toString()), 5);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+    
 
     public void uyari(int value, int index) {
 
-       
-            int yeniPara = db.priceValue - value;
-            System.out.println("Yeni: " + yeniPara + " value: " + value);
-            db.Guncelle(yeniPara);
-            DatabaseProcess.priceValue = yeniPara;
+        if (Integer.parseInt(adet.getValue().toString()) == 0 || assets.coinsValue[index]<Integer.parseInt(adet.getValue().toString())) {
+            JOptionPane.showOptionDialog(null, "Lütfen 0 ve sahip olduğunuzdan fazla değer girmeyin!", "Hey!", JOptionPane.CLOSED_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);
+
+        } else {
             if (index == 0) {
-                int val =assets.coinsValue[0]- Integer.parseInt(adet.getValue().toString());
+                int val = assets.coinsValue[0] - Integer.parseInt(adet.getValue().toString());
                 assets.Guncelle(val, assets.coinsValue[1], assets.coinsValue[2], assets.coinsValue[3], assets.coinsValue[4], assets.coinsValue[5]);
+                int toplamCoinParası = Integer.parseInt(adet.getValue().toString()) * coins.coinsValue[0];
+                int anaPara = totalDb.total + toplamCoinParası;
+                totalDb.Guncelle(anaPara);
+
+                int toplamPara = (db.priceValue - anaPara) + anaPara;
+                db.Guncelle(toplamPara);
+                DatabaseProcess.priceValue = toplamPara;
+
             } else if (index == 1) {
-                int val =  assets.coinsValue[1]- Integer.parseInt(adet.getValue().toString());
+                int val = assets.coinsValue[1] - Integer.parseInt(adet.getValue().toString());
                 assets.Guncelle(assets.coinsValue[0], val, assets.coinsValue[2], assets.coinsValue[3], assets.coinsValue[4], assets.coinsValue[5]);
+                int toplamCoinParası = Integer.parseInt(adet.getValue().toString()) * coins.coinsValue[1];
+                int anaPara = totalDb.total + toplamCoinParası;
+                totalDb.Guncelle(anaPara);
 
+                int toplamPara = (db.priceValue - anaPara) + anaPara;
+                db.Guncelle(toplamPara);
+                DatabaseProcess.priceValue = toplamPara;
             } else if (index == 2) {
-                int val = assets.coinsValue[2]- Integer.parseInt(adet.getValue().toString());
+                int val = assets.coinsValue[2] - Integer.parseInt(adet.getValue().toString());
                 assets.Guncelle(assets.coinsValue[0], assets.coinsValue[1], val, assets.coinsValue[3], assets.coinsValue[4], assets.coinsValue[5]);
+                int toplamCoinParası = Integer.parseInt(adet.getValue().toString()) * coins.coinsValue[2];
+                int anaPara = totalDb.total + toplamCoinParası;
+                totalDb.Guncelle(anaPara);
 
+                int toplamPara = (db.priceValue - anaPara) + anaPara;
+                db.Guncelle(toplamPara);
+                DatabaseProcess.priceValue = toplamPara;
             } else if (index == 3) {
-                int val = assets.coinsValue[3]-Integer.parseInt(adet.getValue().toString())  ;
+                int val = assets.coinsValue[3] - Integer.parseInt(adet.getValue().toString());
                 assets.Guncelle(assets.coinsValue[0], assets.coinsValue[1], assets.coinsValue[2], val, assets.coinsValue[4], assets.coinsValue[5]);
+                int toplamCoinParası = Integer.parseInt(adet.getValue().toString()) * coins.coinsValue[3];
+                int anaPara = totalDb.total + toplamCoinParası;
+                totalDb.Guncelle(anaPara);
 
+                int toplamPara = (db.priceValue - anaPara) + anaPara;
+                db.Guncelle(toplamPara);
+                DatabaseProcess.priceValue = toplamPara;
             } else if (index == 4) {
-                int val = assets.coinsValue[4]- Integer.parseInt(adet.getValue().toString()) ;
-                assets.Guncelle(assets.coinsValue[0], assets.coinsValue[1], assets.coinsValue[2], assets.coinsValue[3],val, assets.coinsValue[5]);
+                int val = assets.coinsValue[4] - Integer.parseInt(adet.getValue().toString());
+                assets.Guncelle(assets.coinsValue[0], assets.coinsValue[1], assets.coinsValue[2], assets.coinsValue[3], val, assets.coinsValue[5]);
+                int toplamCoinParası = Integer.parseInt(adet.getValue().toString()) * coins.coinsValue[4];
+                int anaPara = totalDb.total + toplamCoinParası;
+                
 
+                int toplamPara = (db.priceValue - anaPara) + anaPara;
+                totalDb.Guncelle(anaPara);
+                db.Guncelle(toplamPara);
+                DatabaseProcess.priceValue = toplamPara;
             } else if (index == 5) {
-                int val = assets.coinsValue[5] - Integer.parseInt(adet.getValue().toString()) ;
+                int val = assets.coinsValue[5] - Integer.parseInt(adet.getValue().toString());
                 assets.Guncelle(assets.coinsValue[0], assets.coinsValue[1], assets.coinsValue[2], assets.coinsValue[3], assets.coinsValue[4], val);
+                int toplamCoinParası = Integer.parseInt(adet.getValue().toString()) * coins.coinsValue[5];
+                int anaPara = totalDb.total + toplamCoinParası;
+                totalDb.Guncelle(anaPara);
 
+                int toplamPara = (db.priceValue - anaPara) + anaPara;
+                db.Guncelle(toplamPara);
+                DatabaseProcess.priceValue = toplamPara;
             }
 
             System.out.println("Güncel para: " + db.priceValue);
@@ -312,8 +367,10 @@ public class SellCoin extends javax.swing.JFrame {
                 HomePage homePage = new HomePage();
                 homePage.setVisible(true);
             }
-        
+        }
+
     }
+
     /**
      * @param args the command line arguments
      */
@@ -358,6 +415,8 @@ public class SellCoin extends javax.swing.JFrame {
     private javax.swing.ButtonGroup group;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButton solana;
     private javax.swing.JRadioButton tether;
     // End of variables declaration//GEN-END:variables

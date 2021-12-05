@@ -3,6 +3,7 @@ package coinsimulators;
 import databases.AssetsDatabase;
 import databases.CoinsDatabase;
 import databases.DatabaseProcess;
+import databases.TotalDb;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -24,6 +25,7 @@ public class HomePage extends javax.swing.JFrame {
     CoinsDatabase coins = new CoinsDatabase();
     DatabaseProcess db = new DatabaseProcess();
     AssetsDatabase assets = new AssetsDatabase();
+    TotalDb totalDb = new TotalDb();
     public HomePage() {
         initComponents();
         Dimension windowSize = getSize();
@@ -35,7 +37,7 @@ public class HomePage extends javax.swing.JFrame {
         super.setLocation(dx, dy);
         DatabaseProcess.Listele();
         AssetsDatabase assets = new AssetsDatabase();
-        userPrice.setText("Mevcut Para: " + DatabaseProcess.priceValue + " $");
+        userPrice.setText("Toplam Para: " + DatabaseProcess.priceValue + " $" +"  |  Ana Para: "+totalDb.total+" $");
         //WindowTitle();
         super.setTitle("Coin Simulator");
         DefaultTableModel tblModel = (DefaultTableModel) coinTable.getModel();
@@ -68,7 +70,7 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     public void artir() {
-        Timer timer = new Timer(1000, new ActionListener() {
+        Timer timer = new Timer(4000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Random rand = new Random();
@@ -97,8 +99,16 @@ public class HomePage extends javax.swing.JFrame {
                     String tbData[] = {"  " + coins.coinsName[i], "  " + coins.coinsValue[i] + (sayiDizi[i] ? "  ⬆" : "  ⬇")};
 
                     tblModel.addRow(tbData);
-                    db.Guncelle(coins.coinsValue[i] *  assets.coinsValue[i]);
+                    
                 }
+                int lastValue = 0;
+                for(int i = 0;i<6;i++){
+                    lastValue += coins.coinsValue[i]*assets.coinsValue[i];
+                }
+                
+                db.Guncelle(lastValue+totalDb.total);
+                
+                userPrice.setText("Toplam Para: " + DatabaseProcess.priceValue + " $" +"  |  Ana Para: "+totalDb.total+" $");
             }
         });
         timer.start();

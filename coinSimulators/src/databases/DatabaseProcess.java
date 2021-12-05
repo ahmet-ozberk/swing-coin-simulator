@@ -53,12 +53,12 @@ public class DatabaseProcess {
     }
 
     public static void Guncelle(int para) {
-        int price = para;
+  
         try {
             Listele();
-            int yenino = price;
+       
 
-            String sorgu = String.format("update veriler set PRICE='%d'", price);
+            String sorgu = String.format("update veriler set PRICE='%d'", para);
 
             Statement stmt = con.createStatement();
             int guncelleme = stmt.executeUpdate(sorgu);

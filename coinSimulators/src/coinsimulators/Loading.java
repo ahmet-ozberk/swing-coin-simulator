@@ -4,6 +4,7 @@ import databases.AssetsDatabase;
 import databases.CoinsDatabase;
 import databases.DatabaseProcess;
 import databases.ItemsDatabase;
+import databases.TotalDb;
 import databases.UserItems;
 import java.awt.Dimension;
 import javax.swing.*;
@@ -73,12 +74,15 @@ public class Loading extends JFrame {
             DatabaseProcess.Listele();
             UserItems.main(list);
             UserItems.Listele();
+            TotalDb.main(list);
+            TotalDb.Listele();
             CoinsDatabase.main(list);
             AssetsDatabase.main(list);
             AssetsDatabase.Listele();
-            if(DatabaseProcess.userName== null){
+            if(DatabaseProcess.userName == null){
                 CoinsDatabase.Ekle();
                 AssetsDatabase.Ekle();
+                TotalDb.Ekle();
             }
             CoinsDatabase.Listele();
             ItemsDatabase.main(list);

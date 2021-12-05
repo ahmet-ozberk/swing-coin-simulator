@@ -6,6 +6,7 @@ package coinsimulators;
 
 import databases.DatabaseProcess;
 import databases.ItemsDatabase;
+import databases.TotalDb;
 import databases.UserItems;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -37,7 +38,7 @@ public class ItemBuy extends javax.swing.JFrame {
         int dy = centerPoint.y - windowSize.height / 2;
         super.setLocation(dx, dy);
         DatabaseProcess.Listele();
-        para.setText("Mevcut Para: " + DatabaseProcess.priceValue + " $");
+        para.setText("Ana Para: " + TotalDb.total + " $");
         buyButton.setEnabled(false);
     }
 
@@ -62,6 +63,7 @@ public class ItemBuy extends javax.swing.JFrame {
         para = new javax.swing.JLabel();
         buyButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Satın Al");
@@ -134,6 +136,9 @@ public class ItemBuy extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jLabel2.setText("Not: Almak istediğiniz eşya ana paranızdan fazla olursa alamazsınız.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,35 +147,35 @@ public class ItemBuy extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(para, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(22, Short.MAX_VALUE))
+                        .addContainerGap(19, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mulk)
-                            .addComponent(bilgisayar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(araba)
-                            .addComponent(market))
-                        .addGap(91, 91, 91)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(mulk)
+                                    .addComponent(bilgisayar))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(araba)
+                                    .addComponent(market))
+                                .addGap(91, 91, 91)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(gemi)
-                                    .addComponent(otel))
-                                .addGap(17, 17, 17))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105))
+                                    .addComponent(otel))))
+                        .addGap(17, 17, 17))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,9 +197,12 @@ public class ItemBuy extends javax.swing.JFrame {
                     .addComponent(market)
                     .addComponent(otel))
                 .addGap(18, 18, 18)
-                .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
         );
 
         pack();
@@ -267,14 +275,13 @@ public class ItemBuy extends javax.swing.JFrame {
 
     public void uyari(int value) {
 
-        if (value > data.priceValue) {
+        if (value > TotalDb.total) {
             JOptionPane.showMessageDialog(null, "Bu eşyayı alabilmek yeterli bakiyen yok!",
                     "Hey!", JOptionPane.ERROR_MESSAGE);
         } else {
-            int yeniPara = data.priceValue - value;
-            System.out.println("Yeni: " + yeniPara + " value: " + value);
-            data.Guncelle(yeniPara);
-            DatabaseProcess.priceValue = yeniPara;
+            int yeniPara = TotalDb.total - value;
+    
+            TotalDb.Guncelle(yeniPara);
 
             System.out.println("Güncel para: " + data.priceValue);
             JFrame frame = new JFrame();
@@ -331,6 +338,7 @@ public class ItemBuy extends javax.swing.JFrame {
     private javax.swing.JRadioButton gemi;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JRadioButton market;
     private javax.swing.JRadioButton mulk;
