@@ -1,10 +1,8 @@
 package databases;
 
-import java.awt.List;
 import java.sql.*;
-import java.util.ArrayList;
 
-public class CoinsDatabase {
+public class AssetsDatabase {
 
     private static Connection con;
     private static Statement stmt;
@@ -12,7 +10,7 @@ public class CoinsDatabase {
     public static void yeniVtOlustur(String dosyaadi) throws ClassNotFoundException {
         try {
             Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:coins.db");
+            con = DriverManager.getConnection("jdbc:sqlite:assets.db");
             stmt = con.createStatement();
             String sql = "CREATE TABLE if not exists VERILER "
                     + "(BITCOIN INT  NOT NULL,"
@@ -55,7 +53,7 @@ public class CoinsDatabase {
     public static void Ekle() {
         try {
             Statement stmt = con.createStatement();
-            String sorgu = String.format("insert into veriler values('%d', '%d', '%d','%d', '%d', '%d')", 64000, 23000, 5467, 3466, 2435, 7645);
+            String sorgu = String.format("insert into veriler values('%d', '%d', '%d','%d', '%d', '%d')", 0, 0, 0, 0, 0, 0);
             int ekleme = stmt.executeUpdate(sorgu);
             System.out.println("Kayıt Eklendi");
         } catch (Exception e) {
@@ -65,12 +63,12 @@ public class CoinsDatabase {
 
     public static void Guncelle(int bitcoin, int ethereum, int tether, int solana, int cardano, int binance) {
 
-        int bitcoinn = coinsValue[0] + bitcoin;
-        int ethereumm = coinsValue[1] + ethereum;
-        int tetherr = coinsValue[2] + tether;
-        int solanaa = coinsValue[3] + solana;
-        int cardanoo = coinsValue[4] + cardano;
-        int binancee = coinsValue[5] + binance;
+        int bitcoinn =  bitcoin;
+        int ethereumm = ethereum;
+        int tetherr =  tether;
+        int solanaa = solana;
+        int cardanoo =  cardano;
+        int binancee =  binance;
 
         try {
             Listele();

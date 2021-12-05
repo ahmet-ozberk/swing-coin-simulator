@@ -1,5 +1,6 @@
 package coinsimulators;
 
+import databases.AssetsDatabase;
 import databases.DatabaseProcess;
 import databases.UserItems;
 import java.awt.Dimension;
@@ -33,6 +34,10 @@ public class MainClass extends javax.swing.JFrame {
         DatabaseProcess.Listele();
         UserItems.main(list);
         UserItems.Listele();
+        AssetsDatabase assets = new AssetsDatabase();
+        assets.main(list);
+        assets.Listele();
+
         kullaniciAdiTextField.setText("Kullanıcı adını gir ve başla...");
         baslaButton.setVisible(false);
 
@@ -198,7 +203,7 @@ public class MainClass extends javax.swing.JFrame {
         } else {
             DatabaseProcess.Ekle(0, text, 4564000);
             UserItems.Ekle();
-
+            AssetsDatabase.Ekle();
             var f = new JFrame();
             JOptionPane.showMessageDialog(f, "Kaydınız tamamlandı anasayfaya yönlendiriliyorsunuz..");
             try {

@@ -62,7 +62,7 @@ public class DatabaseProcess {
 
             Statement stmt = con.createStatement();
             int guncelleme = stmt.executeUpdate(sorgu);
-            
+            priceValue = para;
             System.out.println("Kayıtlar Güncellendi");
         } catch (Exception e) {
             System.out.println(e);

@@ -63,7 +63,7 @@ public class ItemBuy extends javax.swing.JFrame {
         buyButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Satın Al");
         setLocation(new java.awt.Point(500, 250));
 

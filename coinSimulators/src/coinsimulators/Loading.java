@@ -1,5 +1,6 @@
 package coinsimulators;
 
+import databases.AssetsDatabase;
 import databases.CoinsDatabase;
 import databases.DatabaseProcess;
 import databases.ItemsDatabase;
@@ -19,7 +20,7 @@ public class Loading extends JFrame {
     public static void main(String[] args) {
 
         // create a frame
-        f = new JFrame("Uygulama Yükleniyor..");
+        f = new JFrame("Simülasyon Yükleniyor..");
 
         f.setLocation(500, 300);
 
@@ -73,7 +74,12 @@ public class Loading extends JFrame {
             UserItems.main(list);
             UserItems.Listele();
             CoinsDatabase.main(list);
-            CoinsDatabase.Ekle();
+            AssetsDatabase.main(list);
+            AssetsDatabase.Listele();
+            if(DatabaseProcess.userName== null){
+                CoinsDatabase.Ekle();
+                AssetsDatabase.Ekle();
+            }
             CoinsDatabase.Listele();
             ItemsDatabase.main(list);
             ItemsDatabase.Ekle();
